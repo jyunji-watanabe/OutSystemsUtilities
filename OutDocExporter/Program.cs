@@ -12,23 +12,17 @@ namespace OutSystemsUtilities
             IConfiguration configuration = new ConfigurationBuilder()
                                                 .AddJsonFile("appsettings.json", true,true)
                                                 .Build();
-            var url = configuration.GetSection("HostAddress").Value + "OutDoc/eSpace_List.aspx";
+            var url = configuration.GetSection("HostAddress").Value + "OutDoc";
             var userName = configuration.GetSection("UserName").Value;
             var password = configuration.GetSection("Password").Value;
             using (var driver = new ChromeDriver())
             {
+                // ログインページヘ遷移し、ログインを実行する
                 driver.Navigate().GoToUrl(url);
-                // UserNameとPasswordを入力
-                var table = driver.FindElement(By.CssSelector(".MainContent table table"));
-                var userInput = table.FindElement(By.CssSelector("tr:nth-of-type(3) input"));
-                userInput.Clear();
-                userInput.SendKeys(userName);
-                var passwordInput = table.FindElement(By.CssSelector("tr:nth-of-type(5) input"));
-                passwordInput.Clear();
-                passwordInput.SendKeys(password);
-                // ログインボタンをクリック
-                driver.FindElement(By.CssSelector("input[type=submit]")).Click();
-
+                var loginPage = new LoginPage(driver);
+                loginPage.SetCredential(userName, password);
+                var WelcomePage = loginPage.LoginAndGoToWelcomePage();
+                
                 var debugdummy = "dummy";
             }
         }
