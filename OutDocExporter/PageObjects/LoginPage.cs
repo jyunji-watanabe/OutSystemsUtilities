@@ -1,18 +1,17 @@
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium;
 
-public class LoginPage 
+public class Login 
 {
     private const string PageTitle = "Login";
     private RemoteWebDriver driver;
-    public LoginPage(RemoteWebDriver driver)
+    public Login(RemoteWebDriver driver)
     {
         this.driver = driver;
-        if (this.driver.Title != LoginPage.PageTitle)
+        if (this.driver.Title != Login.PageTitle)
         {
             throw new IllegalPageStateException(
-                "ページタイトルが想定と異なります（想定：" + LoginPage.PageTitle + "、実際：" + this.driver.Title + "）");
+                "ページタイトルが想定と異なります（想定：" + Login.PageTitle + "、実際：" + this.driver.Title + "）");
         }
     }
 
@@ -28,9 +27,9 @@ public class LoginPage
         passwordInput.SendKeys(password);
     }
 
-    public WelcomePage LoginAndGoToWelcomePage()
+    public HomeScreen LoginAndGoToHomeScreen()
     {
         driver.FindElement(By.CssSelector("input[type=submit]")).Click();
-        return new WelcomePage(this.driver);
+        return new HomeScreen(this.driver);
     }
 }
