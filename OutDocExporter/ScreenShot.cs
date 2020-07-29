@@ -1,5 +1,6 @@
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium;
+
 public class ScreenShot
 {
     public static string Path = "C:\\work\\ss";
